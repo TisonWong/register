@@ -1,10 +1,11 @@
 package com.meal.register.controller;
 
-import com.meal.register.common.R;
 import com.meal.register.entity.Members;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/login")
@@ -16,15 +17,18 @@ public class LoginController {
     }
 
 
-    @RequestMapping("/index2")
-    public String loginIndex2(){
-        return "login/login2";
-    }
-
-    @ResponseBody
     @RequestMapping("/check")
-    public R check(Members members){
-        System.err.println(members.toString());
-        return R.ok();
+    public String check(Members members, Model model, HttpServletRequest httpServletRequest){
+
+        if(null==members){
+            System.err.println("登录失败");
+            model.addAttribute("message","用户名或密码不正确");
+            return "login/login";
+        }else{
+            System.err.println("登录成功："+members.toString());
+            httpServletRequest.setAttribute("member",members.getMemberId());
+            return "redirect:/registration/index";
+        }
+
     }
 }

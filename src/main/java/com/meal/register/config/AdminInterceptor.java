@@ -19,7 +19,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             return true;
         }
         System.err.println("拦截"+request.getRequestURL());
-        response.sendRedirect(request.getContextPath()+"/login/index2");
+        response.sendRedirect(request.getContextPath()+"/login/index");
         return false;
     }
 

@@ -1,6 +1,7 @@
 package com.meal.register.controller;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Tison
  * @since 2021-06-24
  */
-@RestController
+@Controller
 @RequestMapping("/registration")
 public class RegistrationController{
+
+    @RequestMapping("/index")
+    public String getPage(){
+        return "register/register";
+    }
 
 }

@@ -8,7 +8,23 @@
     <!-- Bootstrap 的 CSS 文件 -->
     <link href="/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
 
-    <title>Login</title>
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+            rel="stylesheet"
+    />
+
+    <title>Index</title>
     <style>
         .selector-for-some-widget {
             box-sizing: content-box;
@@ -21,20 +37,25 @@
         <div class="col-md-12">
             <label for="memberName" class="form-label">用户名</label>
             <input type="text" class="form-control" id="memberName" name="memberName" required>
-<!--            <div class="valid-feedback">-->
-<!--                Looks good!-->
-<!--            </div>-->
+            <!--            <div class="valid-feedback">-->
+            <!--                Looks good!-->
+            <!--            </div>-->
         </div>
         <div class="col-md-12">
             <label for="memberPwd" class="form-label">登录密码</label>
             <input type="password" class="form-control" id="memberPwd" name="memberPwd" aria-describedby="inputGroupPrepend1" required>
-<!--            <div class="valid-feedback">-->
-<!--                Looks good!-->
-<!--            </div>-->
+            <!--            <div class="valid-feedback">-->
+            <!--                Looks good!-->
+            <!--            </div>-->
         </div>
-        <div class="col-md-12" id="message" style="display: none">
-            <div class="invalid-feedback" style="display: block">
-                [[${message}]]
+        <div class="col-md-12">
+            <div class="form-outline datepicker">
+                <input
+                        type="text"
+                        class="form-control"
+                        id="exampleDatepicker1"
+                />
+                <label for="exampleDatepicker1" class="form-label">Select a date</label>
             </div>
         </div>
 
@@ -48,16 +69,25 @@
 
 <!-- 选项 1：包含 Popper 的 Bootstrap 集成包 -->
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
         'use strict'
 
-        var message = "[[${message}]]"
-        if(message){
-            var elementById = document.getElementById("message");
-            elementById.style.display = "block";
-        }
+        const datepickerTranslated = document.querySelector('.datepicker-translated');
+        new mdb.Datepicker(datepickerTranslated, {
+            title: 'Datum auswählen',
+            monthsFull: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov','Dez'],
+            weekdaysFull: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            weekdaysShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+            weekdaysNarrow: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
+            okBtnText: 'Ok',
+            clearBtnText: 'Klar',
+            cancelBtnText: 'Schließen',
+        });
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.querySelectorAll('.needs-validation')
