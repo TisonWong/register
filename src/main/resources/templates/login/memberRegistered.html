@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .main_form > div > input{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form action="/member/addMember" method="post" class="main_form">
+        <div>
+            <label>账号</label><input name="memberName"/>
+            <label>密码</label><input name="memberPwd" />
+            <label>邮箱</label><input name="memberEmail" />
+            <label>手机号码</label><input name="memberPhone" />
+        </div>
+        <button type="submit">提交</button>
+    </form>
+</body>
+</html>

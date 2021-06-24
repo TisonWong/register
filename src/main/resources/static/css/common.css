@@ -1,0 +1,18 @@
+*{
+	font-family: "华文新魏";
+	font-size: 12px;
+}
+.header{
+	background-color: rgba(125,5,80,0.8);
+	color: white;
+	font-size: 22px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+#message{
+	background-color: rgba(10,100,150,0.8);
+	padding: 20px 5px 20px 5px;
+
+}
