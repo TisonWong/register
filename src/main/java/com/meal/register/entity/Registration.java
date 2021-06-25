@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -26,21 +29,22 @@ public class Registration {
     private Long registerId;
 
     /**
-     * 人员ID
+     * 用户名
      */
-    private Long memberId;
+    private String memberName;
 
     /**
      * 就餐日期
      */
-    private LocalDateTime dinnerDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dinnerDate;
 
     /**
-     * 登记日期
+     * 部门ID
      */
-    private LocalDateTime registerDate;
+    private String departmentName;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createDate;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)

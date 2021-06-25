@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/login")
@@ -18,7 +19,7 @@ public class LoginController {
 
 
     @RequestMapping("/check")
-    public String check(Members members, Model model, HttpServletRequest httpServletRequest){
+    public String check(Members members, Model model, HttpSession session){
 
         if(null==members){
             System.err.println("登录失败");
@@ -26,7 +27,7 @@ public class LoginController {
             return "login/login";
         }else{
             System.err.println("登录成功："+members.toString());
-            httpServletRequest.setAttribute("member",members.getMemberId());
+            session.setAttribute("member",members);
             return "redirect:/registration/index";
         }
 

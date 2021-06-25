@@ -8,22 +8,6 @@
     <!-- Bootstrap 的 CSS 文件 -->
     <link href="/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
 
-    <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-            rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
-            rel="stylesheet"
-    />
-
     <title>Index</title>
     <style>
         .selector-for-some-widget {
@@ -33,61 +17,61 @@
 </head>
 <body>
 <div class="container">
-    <form class="row g-3 needs-validation" action="/login/check" novalidate>
+
+    <div class="alert alert-success alert-dismissable" style="display:none;">
+        Success! message sent successfully.
+    </div>
+
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+        <h1 class="modal-title">用餐预约</h1>
+    </header>
+
+
+    <form class="row g-3 needs-validation" action="/registration/register" novalidate>
         <div class="col-md-12">
-            <label for="memberName" class="form-label">用户名</label>
+            <label for="memberName" class="form-label">姓名</label>
             <input type="text" class="form-control" id="memberName" name="memberName" required>
             <!--            <div class="valid-feedback">-->
             <!--                Looks good!-->
             <!--            </div>-->
         </div>
         <div class="col-md-12">
-            <label for="memberPwd" class="form-label">登录密码</label>
-            <input type="password" class="form-control" id="memberPwd" name="memberPwd" aria-describedby="inputGroupPrepend1" required>
-            <!--            <div class="valid-feedback">-->
-            <!--                Looks good!-->
-            <!--            </div>-->
+            <label for="departmentName" class="form-label">部门</label>
+            <select class="form-select" aria-label="Default select example" id="departmentName" name="departmentName" required>
+<!--                <option selected>请选择部门</option>-->
+                <option th:each="department:${departments}" th:value="${department.departmentName}" th:text="${department.departmentName}"></option>
+            </select>
+
         </div>
         <div class="col-md-12">
-            <div class="form-outline datepicker">
-                <input
-                        type="text"
-                        class="form-control"
-                        id="exampleDatepicker1"
-                />
-                <label for="exampleDatepicker1" class="form-label">Select a date</label>
-            </div>
+            <label for="dinnerDate" class="form-label">用餐日期</label>
+            <input type="text" class="form-control" id="dinnerDate" th:value="${dinnerDate}" disabled required>
         </div>
 
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">登录</button>
-            <button type="button" class="btn btn-light">注册</button>
+        <div class="col-6 justify-content-center">
+            <button class="btn btn-primary" type="submit">提交</button>
         </div>
     </form>
+
 </div>
 
 
 <!-- 选项 1：包含 Popper 的 Bootstrap 集成包 -->
+<script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<!-- MDB -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
 <script>
+
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
         'use strict'
 
-        const datepickerTranslated = document.querySelector('.datepicker-translated');
-        new mdb.Datepicker(datepickerTranslated, {
-            title: 'Datum auswählen',
-            monthsFull: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-            monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov','Dez'],
-            weekdaysFull: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-            weekdaysShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
-            weekdaysNarrow: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
-            okBtnText: 'Ok',
-            clearBtnText: 'Klar',
-            cancelBtnText: 'Schließen',
-        });
+        var status = "[[${status}]]"
+        var message = "[[${message}]]"
+
+        if(status === "success"){
+            console.log(status === "success")
+            $(".alert").show()
+        }
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.querySelectorAll('.needs-validation')
@@ -104,9 +88,6 @@
                     form.classList.add('was-validated')
                 }, false)
             })
-
-
-
     })()
 </script>
 </body>

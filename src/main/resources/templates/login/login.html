@@ -17,6 +17,11 @@
 </head>
 <body>
 <div class="container">
+
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+        <h1 class="modal-title">登录</h1>
+    </header>
+
     <form class="row g-3 needs-validation" action="/login/check" novalidate>
         <div class="col-md-12">
             <label for="memberName" class="form-label">用户名</label>
@@ -38,9 +43,9 @@
             </div>
         </div>
 
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">登录</button>
-            <button type="button" class="btn btn-light">注册</button>
+        <div class="col-12 d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="submit" class="btn btn-primary btn-lg px-4 gap-3" id="signIn" name="submit">登录</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4" id="signUp" href="/member/registered">注册</button>
         </div>
     </form>
 </div>
@@ -74,9 +79,6 @@
                     form.classList.add('was-validated')
                 }, false)
             })
-
-
-
     })()
 </script>
 </body>
