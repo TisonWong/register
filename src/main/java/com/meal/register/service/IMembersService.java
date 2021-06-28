@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMembersService extends IService<Members> {
 
+    boolean checkMemberPwd(Members members);
+
 }

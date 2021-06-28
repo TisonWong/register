@@ -46,7 +46,7 @@ public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Reg
 
         IPage<Registration> registrationIPage = new Page<>(pageNum,pageSize);
         QueryWrapper<Registration> queryWrapper = new QueryWrapper<>();
-        queryWrapper.between("dinner_date",startDate,endDate);
+        queryWrapper.between("create_date",startDate,endDate);
         // TODO
 //        BeanUtils.copyProperties(xx,xx);
 
@@ -57,11 +57,10 @@ public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Reg
 
     @Override
     public Registration getObj(Registration registration) {
-        // 查询前天凌晨5点后~当天凌晨5点前的记录
-        Map<String, LocalDateTime> queryDate = myTool.getQueryDate();
+        LocalDate nextDay = myTool.getNextDay();
 
         QueryWrapper<Registration> registrationQueryWrapper = new QueryWrapper<>();
-        registrationQueryWrapper.between("dinner_date",queryDate.get("startDate"),queryDate.get("endDate"));
+        registrationQueryWrapper.eq("dinner_date",nextDay);
         registrationQueryWrapper.eq("member_name",registration.getMemberName());
 
         return baseMapper.selectOne(registrationQueryWrapper);

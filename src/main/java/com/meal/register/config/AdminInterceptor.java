@@ -13,14 +13,22 @@ import java.util.Date;
 public class AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        return true;
-//        Members member = (Members) request.getSession().getAttribute("member");
-//        if(null!=member){
-//            return true;
-//        }
-//        System.err.println("拦截"+request.getRequestURL());
-//        response.sendRedirect(request.getContextPath()+"/registration/index");
-//        return true;
+
+        String url = request.getRequestURL().toString();
+        request.getSession().setAttribute("URL",url);
+
+        Members member = (Members) request.getSession().getAttribute("member");
+        if(null!=member){
+            return true;
+        }
+
+        if (url.contains("admin")){
+            response.sendRedirect(request.getContextPath()+"/login/index");
+            return false;
+        }
+
+        response.sendRedirect(request.getContextPath()+"/registration/index");
+        return false;
     }
 
     @Override

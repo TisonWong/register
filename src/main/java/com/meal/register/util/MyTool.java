@@ -21,11 +21,13 @@ public class MyTool {
         Map<String,LocalDateTime> dateTimeMap = new HashMap<>();
 
         LocalDate today = LocalDate.now();
-        LocalDateTime todayDateTime = LocalDateTime.of(today,LocalTime.of(0,0,0));
-        LocalDateTime tomorrowDateTime = LocalDateTime.of(today,LocalTime.of(23,59,0));
+        LocalDateTime startDateTime = LocalDateTime.of(today,LocalTime.of(0,0,0));
+        LocalDateTime endDateTime = LocalDateTime.of(today,LocalTime.of(23,59,0));
 
-        dateTimeMap.put("startDate",todayDateTime);
-        dateTimeMap.put("endDate",tomorrowDateTime);
+        dateTimeMap.put("startDate",startDateTime);
+        dateTimeMap.put("endDate",endDateTime);
+
+        System.err.println(startDateTime+" - "+endDateTime);
 
         return dateTimeMap;
     }

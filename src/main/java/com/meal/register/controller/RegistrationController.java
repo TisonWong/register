@@ -56,24 +56,10 @@ public class RegistrationController{
         return "register/register";
     }
 
-    @RequestMapping("/list")
-    public String getListPage(Model model){
-
-        // 查询前天凌晨5点后~当天凌晨5点前的记录
-        Map<String, LocalDateTime> queryDate = myTool.getQueryDate();
-
-        IPage<Registration> registrationIPage = registrationService.selectPage(1L, 10000L, null, queryDate.get("startDate"), queryDate.get("endDate"));
-        model.addAttribute("list",registrationIPage.getRecords());
-        model.addAttribute("total",registrationIPage.getTotal());
-
-        return "register/registerList";
-    }
-
     @ResponseBody
     @RequestMapping("/register")
     public String register(Registration registration){
 
-        // TODO 查询该人是否已经登记过
         Registration obj = registrationService.getObj(registration);
         if(null != obj){
             return "您已预约了【"+myTool.getNextDay()+"】，请勿重复提交。";

@@ -37,10 +37,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="r:${list}">
-                    <th scope="row">1</th>
-                    <td th:text="${r.memberName}"></td>
-                    <td th:text="${r.departmentName}"></td>
+                <tr th:each="obj,row:${list}">
+                    <th scope="row" th:text="${(row.index+1)}"></th>
+                    <td th:text="${obj.memberName}"></td>
+                    <td th:text="${obj.departmentName}"></td>
                 </tr>
             </tbody>
         </table>

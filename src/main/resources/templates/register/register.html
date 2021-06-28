@@ -48,9 +48,11 @@
             <input type="text" class="form-control" id="dinnerDate" th:value="${dinnerDate}" disabled required>
         </div>
 
-        <div class="col-6 justify-content-center">
-            <button class="btn btn-primary" type="submit">提交</button>
+        <div class="col-12 d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="submit" class="btn btn-primary btn-lg px-4 gap-3" >提交</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="javascript:window.location='/admin/list'">管理员</button>
         </div>
+
     </form>
 
 </div>
@@ -66,10 +68,8 @@
         'use strict'
 
         var status = "[[${status}]]"
-        var message = "[[${message}]]"
 
         if(status === "success"){
-            console.log(status === "success")
             $(".alert").show()
         }
 
