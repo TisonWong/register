@@ -13,30 +13,19 @@ import java.util.Map;
 public class MyTool {
 
     public LocalDate getNextDay(){
-        LocalTime nowTime = LocalTime.now();
         LocalDate nowDate = LocalDate.now();
-        int hour = nowTime.get(ChronoField.HOUR_OF_DAY);
-        LocalDate nextDay;
-        if(hour<5){
-            nextDay = nowDate;
-        }else{
-            nextDay = nowDate.plusDays(1);
-        }
-        return nextDay;
+        return nowDate.plusDays(1);
     }
 
     public Map<String, LocalDateTime> getQueryDate(){
         Map<String,LocalDateTime> dateTimeMap = new HashMap<>();
 
-        LocalDate nowDate = LocalDate.now();
-        LocalDateTime yesterdayDateTime = LocalDateTime.of(LocalDate.now(),LocalTime.of(5,0,0));
+        LocalDate today = LocalDate.now();
+        LocalDateTime todayDateTime = LocalDateTime.of(today,LocalTime.of(0,0,0));
+        LocalDateTime tomorrowDateTime = LocalDateTime.of(today,LocalTime.of(23,59,0));
 
-        LocalDate today = nowDate.plusDays(1);
-        LocalDateTime todayDateTime = LocalDateTime.of(today,LocalTime.of(5,0,0));
-
-        dateTimeMap.put("startDate",yesterdayDateTime);
-        dateTimeMap.put("endDate",todayDateTime);
-        System.err.println(yesterdayDateTime+"~"+todayDateTime);
+        dateTimeMap.put("startDate",todayDateTime);
+        dateTimeMap.put("endDate",tomorrowDateTime);
 
         return dateTimeMap;
     }

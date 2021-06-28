@@ -8,6 +8,7 @@ import com.meal.register.mapper.RegistrationMapper;
 import com.meal.register.service.IRegistrationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.meal.register.util.MyTool;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +47,10 @@ public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Reg
         IPage<Registration> registrationIPage = new Page<>(pageNum,pageSize);
         QueryWrapper<Registration> queryWrapper = new QueryWrapper<>();
         queryWrapper.between("dinner_date",startDate,endDate);
+        // TODO
+//        BeanUtils.copyProperties(xx,xx);
 
-        baseMapper.selectPage(registrationIPage,queryWrapper);
+      baseMapper.selectPage(registrationIPage,queryWrapper);
         return registrationIPage;
 
     }

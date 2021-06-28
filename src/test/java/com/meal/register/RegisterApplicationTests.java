@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @SpringBootTest
 class RegisterApplicationTests {
@@ -16,7 +17,7 @@ class RegisterApplicationTests {
 
     @Test
     void contextLoads() {
-
+        Map<String, LocalDateTime> queryDate = myTool.getQueryDate();
     }
 
 }

@@ -79,6 +79,12 @@ public class RegistrationController{
             return "您已预约了【"+myTool.getNextDay()+"】，请勿重复提交。";
         }
 
+        LocalTime now = LocalTime.now();
+        int hour = now.getHour();
+        if(hour>=17){
+            return "预约失败，已经过了预约时间";
+        }
+
         registration.setDinnerDate(myTool.getNextDay());
         registrationService.addRegister(registration);
 
