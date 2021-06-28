@@ -66,7 +66,7 @@ CREATE TABLE `registration` (
   `register_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `member_name` varchar(100) DEFAULT NULL COMMENT '用户名',
   `dinner_date` datetime DEFAULT NULL COMMENT '就餐日期',
-  `department_name` varchar(100) DEFAULT NULL,
+  `department_name` varchar(100) DEFAULT NULL COMMENT '部门名称',
   `create_date` datetime DEFAULT NULL,
   `update_date` datetime DEFAULT NULL,
   `deleted` int(4) DEFAULT '0',
