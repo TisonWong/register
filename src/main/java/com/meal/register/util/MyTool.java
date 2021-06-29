@@ -26,9 +26,6 @@ public class MyTool {
 
         dateTimeMap.put("startDate",startDateTime);
         dateTimeMap.put("endDate",endDateTime);
-
-        System.err.println(startDateTime+" - "+endDateTime);
-
         return dateTimeMap;
     }
 

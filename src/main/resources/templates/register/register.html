@@ -30,7 +30,7 @@
     <form class="row g-3 needs-validation" action="/registration/register" novalidate>
         <div class="col-md-12">
             <label for="memberName" class="form-label">姓名</label>
-            <input type="text" class="form-control" id="memberName" name="memberName" required>
+            <input type="text" class="form-control" id="memberName" name="memberName" iscookie="true" required>
             <!--            <div class="valid-feedback">-->
             <!--                Looks good!-->
             <!--            </div>-->
@@ -39,13 +39,21 @@
             <label for="departmentName" class="form-label">部门</label>
             <select class="form-select" aria-label="Default select example" id="departmentName" name="departmentName" required>
 <!--                <option selected>请选择部门</option>-->
-                <option th:each="department:${departments}" th:value="${department.departmentName}" th:text="${department.departmentName}"></option>
+                <option th:each="department:${departments}" th:value="${department.departmentName}" th:text="${department.departmentName}" ></option>
             </select>
-
         </div>
         <div class="col-md-12">
             <label for="dinnerDate" class="form-label">用餐日期</label>
-            <input type="text" class="form-control" id="dinnerDate" th:value="${dinnerDate}" disabled required>
+            <input type="text" class="form-control" id="dinnerDate" th:value="${dinnerDate}" disabled>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="isRemenber" checked>
+                <label class="form-check-label" for="isRemenber">
+                    记住用户名
+                </label>
+            </div>
         </div>
 
         <div class="col-12 d-grid gap-2 d-sm-flex justify-content-sm-center">
@@ -54,7 +62,6 @@
         </div>
 
     </form>
-
 </div>
 
 
@@ -65,13 +72,17 @@
 
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
-        'use strict'
+
+        /*页面打开，判断是否存储过用户名---*/
+        var memberName=window.localStorage.getItem('memberName');
+        console.log(memberName)
 
         var status = "[[${status}]]"
 
         if(status === "success"){
             $(".alert").show()
         }
+
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.querySelectorAll('.needs-validation')
@@ -85,10 +96,22 @@
                         event.stopPropagation()
                     }
 
+                    /*判断用户是否选择记住用户名*/
+                    var isRemenber=document.getElementById('isRemenber');
+                    if(isRemenber.checked===true){
+                        /*存储数据到localstorage*/
+                        window.localStorage.setItem('memberName',memberName);
+                    }
+                    else{
+                        window.localStorage.removeItem('memberName');
+                    }
+
                     form.classList.add('was-validated')
                 }, false)
             })
-    })()
+    })();
+
+
 </script>
 </body>
 </html>
