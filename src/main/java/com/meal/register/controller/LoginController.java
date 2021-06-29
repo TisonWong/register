@@ -5,7 +5,7 @@ import com.meal.register.service.IMembersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +25,14 @@ public class LoginController {
 
 
     @RequestMapping("/check")
-    public String check(Members members, Model model, HttpSession session){
+    public String check(@RequestParam("memberName") String memberName,@RequestParam("memberPwd") String memberPwd, Model model, HttpSession session){
+
+        Members members = new Members();
+        members.setMemberName(memberName);
+        members.setMemberPwd(memberPwd);
+
+        System.err.println(members.toString());
+
         String url = "";
         if(null != session.getAttribute("url")){
             url = (String) session.getAttribute("url");

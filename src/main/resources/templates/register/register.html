@@ -18,16 +18,11 @@
 <body>
 <div class="container">
 
-    <div class="alert alert-success alert-dismissable" style="display:none;">
-        Success! message sent successfully.
-    </div>
-
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
         <h1 class="modal-title">用餐预约</h1>
     </header>
 
-
-    <form class="row g-3 needs-validation" action="/registration/register" novalidate>
+    <form class="row g-3 needs-validation" action="/registration/register" method="post" novalidate>
         <div class="col-md-12">
             <label for="memberName" class="form-label">姓名</label>
             <input type="text" class="form-control" id="memberName" name="memberName" iscookie="true" required>
@@ -38,7 +33,6 @@
         <div class="col-md-12">
             <label for="departmentName" class="form-label">部门</label>
             <select class="form-select" aria-label="Default select example" id="departmentName" name="departmentName" required>
-<!--                <option selected>请选择部门</option>-->
                 <option th:each="department:${departments}" th:value="${department.departmentName}" th:text="${department.departmentName}" ></option>
             </select>
         </div>
@@ -49,9 +43,9 @@
 
         <div class="col-md-12">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="isRemenber" checked>
-                <label class="form-check-label" for="isRemenber">
-                    记住用户名
+                <input class="form-check-input" type="checkbox" id="remember" checked>
+                <label class="form-check-label" for="remember">
+                    记住登记信息
                 </label>
             </div>
         </div>
@@ -67,21 +61,17 @@
 
 <!-- 选项 1：包含 Popper 的 Bootstrap 集成包 -->
 <script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/jquery.cookie.js"></script>
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script>
 
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
 
-        /*页面打开，判断是否存储过用户名---*/
-        var memberName=window.localStorage.getItem('memberName');
-        console.log(memberName)
+
+        getCookie();//获取cookie
 
         var status = "[[${status}]]"
-
-        if(status === "success"){
-            $(".alert").show()
-        }
 
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -95,21 +85,34 @@
                         event.preventDefault()
                         event.stopPropagation()
                     }
-
-                    /*判断用户是否选择记住用户名*/
-                    var isRemenber=document.getElementById('isRemenber');
-                    if(isRemenber.checked===true){
-                        /*存储数据到localstorage*/
-                        window.localStorage.setItem('memberName',memberName);
-                    }
-                    else{
-                        window.localStorage.removeItem('memberName');
-                    }
-
+                    setAndRemoveCookie();
                     form.classList.add('was-validated')
                 }, false)
             })
     })();
+
+    function setAndRemoveCookie(){
+        if($("#remember").is(':checked')){
+            var memberName = $("#memberName").val();
+            var departmentName = $("#departmentName").val();
+            $.cookie("remember","true",{expires : 7 })//单位：天
+            $.cookie("memberName",memberName,{expires: 7 });
+            $.cookie("departmentName",departmentName,{expires: 7 })
+        }else{
+            $.cookie("remember","false",{expires:-1 });
+            $.cookie("memberName",null,{expires:-1});
+            $.cookie("departmentName",null,{expires:-1});
+        }
+    }
+
+    //获取cookie
+    function getCookie(){
+        if($.cookie("remember")==="true"){
+            $("#remember").attr("checked",true);
+            $("#memberName").val($.cookie("memberName"));
+            $("#departmentName").val($.cookie("departmentName"));
+        }
+    }
 
 
 </script>
