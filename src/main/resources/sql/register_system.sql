@@ -21,12 +21,12 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `departments`;
 CREATE TABLE `departments` (
   `department_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `department_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '部门名称',
+  `department_name` varchar(150) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '部门名称',
   `create_date` datetime DEFAULT NULL COMMENT '创建日期',
   `update_date` datetime DEFAULT NULL COMMENT '更新日期',
   `deleted` int(4) DEFAULT NULL COMMENT '是否已经删除',
   PRIMARY KEY (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
 -- ----------------------------
 -- Records of departments
@@ -52,7 +52,7 @@ CREATE TABLE `members` (
   `update_date` datetime DEFAULT NULL,
   `deleted` int(4) DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of members
@@ -71,5 +71,5 @@ CREATE TABLE `registration` (
   `update_date` datetime DEFAULT NULL,
   `deleted` int(4) DEFAULT '0',
   PRIMARY KEY (`register_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='登记记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='登记记录表';
 

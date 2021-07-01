@@ -1,7 +1,6 @@
 package com.meal.register.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.meal.register.entity.Departments;
 import com.meal.register.entity.Registration;
 import com.meal.register.service.IDepartmentsService;
@@ -13,16 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
