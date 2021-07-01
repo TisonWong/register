@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 必须的 meta 标签 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 的 CSS 文件 -->
+    <link href="/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/bootstrap-table-dist/bootstrap-table.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/bootstrap-datepicker-dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="/bootstrap-datepicker-dist/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+    <title>Index</title>
+</head>
+<body>
+
+<div class="container">
+    <div id="toolbar">
+        <div class="input-group input-daterange">
+            <input type="text" class="form-control" value="2012-04-05" data-provide="datepicker">
+            <div class="input-group-addon">to</div>
+            <input type="text" class="form-control" value="2012-04-19" data-provide="datepicker">
+        </div>
+    </div>
+    <table
+            id="table"
+            data-toggle="table"
+            data-search="true"
+            data-height="460"
+            data-show-refresh="true"
+            data-show-columns="true"
+            data-show-fullscreen="true"
+            data-show-export="true"
+            data-icons-prefix="icon"
+            data-icons="icons"
+            data-url="./data1.json">
+        <thead>
+        <tr>
+            <th data-field="id">ID</th>
+            <th data-field="name">Item Name</th>
+            <th data-field="price">Item Price</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<!-- 选项 1：包含 Popper 的 Bootstrap 集成包 -->
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/js/tableExport.min.js"></script>
+<script type="text/javascript" src="/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/bootstrap-table-dist/bootstrap-table.js"></script>
+<script type="text/javascript" src="/bootstrap-table-dist/locale/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="/bootstrap-table-dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script type="text/javascript" src="/bootstrap-datepicker-dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/bootstrap-datepicker-dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script>
+
+    $('.input-daterange input').each(function() {
+        $(this).datepicker('clearDates');
+    });
+
+    window.icons = {
+        refresh: 'bi-arrow-clockwise',
+        columns: 'bi-list-check',
+        fullscreen: 'bi-arrows-fullscreen',
+        export: 'bi-cloud-download'
+    }
+</script>
+</body>
+</html>
