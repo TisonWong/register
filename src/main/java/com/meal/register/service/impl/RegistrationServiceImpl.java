@@ -46,7 +46,11 @@ public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Reg
 
         IPage<Registration> registrationIPage = new Page<>(pageNum,pageSize);
         QueryWrapper<Registration> queryWrapper = new QueryWrapper<>();
-        queryWrapper.between("create_date",startDate,endDate);
+
+        if(null!=startDate && null!=endDate){
+            queryWrapper.between("create_date",startDate,endDate);
+        }
+
         // TODO
 //        BeanUtils.copyProperties(xx,xx);
 

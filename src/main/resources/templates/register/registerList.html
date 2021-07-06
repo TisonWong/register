@@ -24,7 +24,7 @@
         </div>
     </div>
     <table
-            id="table"
+            id="registerTable"
             data-toggle="table"
             data-search="true"
             data-height="460"
@@ -34,13 +34,12 @@
             data-show-export="true"
             data-icons-prefix="icon"
             data-icons="icons"
-            data-url="./data1.json">
+            data-pagination="true"
+            data-side-pagination="server"
+            data-page-size="50"
+            data-page-list="[10, 25, 50, 100, 200, All]"
+            data-ajax="ajaxRequest">
         <thead>
-        <tr>
-            <th data-field="id">ID</th>
-            <th data-field="name">Item Name</th>
-            <th data-field="price">Item Price</th>
-        </tr>
         </thead>
     </table>
 </div>
@@ -66,6 +65,30 @@
         fullscreen: 'bi-arrows-fullscreen',
         export: 'bi-cloud-download'
     }
+
+    function ajaxRequest(params) {
+        // var url = 'https://examples.wenzhixin.net.cn/examples/bootstrap_table/data';
+        var url = '/admin/pageTable';
+        $.get(url + '?' + $.param(params.data)).then(function (res) {
+            params.success(res.data)
+        })
+    }
+
+    $("#registerTable").bootstrapTable({
+        columns: [{
+            field: "registerId",
+            title: "序号"
+        },{
+            field: "memberName",
+            title: "用户名"
+        },{
+            field: "dinnerDate",
+            title: "就餐日期"
+        },{
+            field: "departmentName",
+            title: "部门名称"
+        }]
+    })
 </script>
 </body>
 </html>
