@@ -17,7 +17,7 @@ public class MyTool {
         return nowDate.plusDays(1);
     }
 
-    public Map<String, LocalDateTime> getQueryDate(){
+    public Map<String, LocalDateTime> getQueryDateTime(){
         Map<String,LocalDateTime> dateTimeMap = new HashMap<>();
 
         LocalDate today = LocalDate.now();

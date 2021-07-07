@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ class RegisterApplicationTests {
 
     @Test
     void contextLoads() {
-        Map<String, LocalDateTime> queryDate = myTool.getQueryDate();
+        Map<String, LocalDateTime> queryDate = myTool.getQueryDateTime();
     }
 
 }

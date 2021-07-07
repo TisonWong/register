@@ -16,29 +16,35 @@
 <body>
 
 <div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+        <h1 class="modal-title">已预约名单</h1>
+    </header>
+
     <div id="toolbar">
-        <div class="input-group input-daterange">
-            <input type="text" class="form-control" value="2012-04-05" data-provide="datepicker">
+        <div class="input-group input-daterange" id="datepicker">
+            <input type="text" class="form-control" id="startDate" name="start" th:value="${toDay}">
             <div class="input-group-addon">to</div>
-            <input type="text" class="form-control" value="2012-04-19" data-provide="datepicker">
+            <input type="text" class="form-control" id="endDate" name="end" th:value="${toDay}">
         </div>
     </div>
+
     <table
             id="registerTable"
             data-toggle="table"
-            data-search="true"
             data-height="460"
+            data-icons="icons"
             data-show-refresh="true"
             data-show-columns="true"
             data-show-fullscreen="true"
             data-show-export="true"
-            data-icons-prefix="icon"
-            data-icons="icons"
             data-pagination="true"
+            data-page-number="1"
+            data-page-size="20"
+            data-page-list="[10, 20, 50, 100, All]"
+            data-query-params-type=""
             data-side-pagination="server"
-            data-page-size="50"
-            data-page-list="[10, 25, 50, 100, 200, All]"
-            data-ajax="ajaxRequest">
+            data-query-params="queryParams"
+            data-url="/admin/pageTable">
         <thead>
         </thead>
     </table>
@@ -55,23 +61,58 @@
 <script type="text/javascript" src="/bootstrap-datepicker-dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script>
 
-    $('.input-daterange input').each(function() {
-        $(this).datepicker('clearDates');
-    });
+    function DatePicker(beginSelector,endSelector){
+
+        // 仅选择日期
+        $(beginSelector).datepicker(
+            {
+                language:  "zh-CN",
+                autoclose: true,
+                startView: 0,
+                format: "yyyy-mm-dd",
+                todayBtn: true,
+                clearBtn: true,
+                endDate: new Date()
+            }).on('changeDate', function(ev){
+                if(ev.date){
+                    $(endSelector).datepicker('setStartDate', new Date(ev.date.valueOf()))
+                }else{
+                    $(endSelector).datepicker('setStartDate',null);
+                }
+                $("#registerTable").bootstrapTable("refresh")
+        });
+
+        $(endSelector).datepicker(
+            {
+                language: "zh-CN",
+                autoclose: true,
+                startView: 0,
+                format: "yyyy-mm-dd",
+                todayBtn: false,
+                clearBtn: true,
+                endDate: new Date()
+            }).on('changeDate', function(ev){
+                if(ev.date){
+                    $(beginSelector).datepicker('setEndDate', new Date(ev.date.valueOf()))
+                }else{
+                    $(beginSelector).datepicker('setEndDate',new Date());
+                }
+                $("#registerTable").bootstrapTable("refresh")
+        });
+    }
+    DatePicker("#startDate","#endDate");
 
     window.icons = {
         refresh: 'bi-arrow-clockwise',
         columns: 'bi-list-check',
         fullscreen: 'bi-arrows-fullscreen',
         export: 'bi-cloud-download'
-    }
+    };
 
-    function ajaxRequest(params) {
-        // var url = 'https://examples.wenzhixin.net.cn/examples/bootstrap_table/data';
-        var url = '/admin/pageTable';
-        $.get(url + '?' + $.param(params.data)).then(function (res) {
-            params.success(res.data)
-        })
+    function queryParams(params) {
+        params.startDate = $("#startDate").val();
+        params.endDate = $("#endDate").val();
+        return params
     }
 
     $("#registerTable").bootstrapTable({
@@ -88,7 +129,7 @@
             field: "departmentName",
             title: "部门名称"
         }]
-    })
+    });
 </script>
 </body>
 </html>

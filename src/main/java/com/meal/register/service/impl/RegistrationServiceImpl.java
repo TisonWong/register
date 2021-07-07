@@ -42,21 +42,20 @@ public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Reg
     }
 
     @Override
-    public IPage<Registration> selectPage(Long pageNum , Long pageSize , Registration registration , LocalDateTime startDate, LocalDateTime endDate) {
+    public void selectPage(Page<Registration> registrationPage, Registration registration , LocalDateTime startDate, LocalDateTime endDate) {
 
-        IPage<Registration> registrationIPage = new Page<>(pageNum,pageSize);
         QueryWrapper<Registration> queryWrapper = new QueryWrapper<>();
 
         if(null!=startDate && null!=endDate){
             queryWrapper.between("create_date",startDate,endDate);
+        }else if(null != startDate){
+            queryWrapper.ge("create_date",startDate);
+        }else if(null != endDate){
+            queryWrapper.le("create_date",endDate);
         }
 
-        // TODO
-//        BeanUtils.copyProperties(xx,xx);
 
-      baseMapper.selectPage(registrationIPage,queryWrapper);
-        return registrationIPage;
-
+      baseMapper.selectPage(registrationPage,queryWrapper);
     }
 
     @Override
