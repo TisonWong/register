@@ -27,14 +27,17 @@
             <input type="text" class="form-control" id="endDate" name="end" th:value="${toDay}">
         </div>
     </div>
-
+<!--data-show-columns="true"-->
     <table
             id="registerTable"
             data-toggle="table"
-            data-height="460"
+            data-height="560"
+            data-toolbar="#toolbar"
             data-icons="icons"
+            data-show-footer="true"
+            data-footer-style="footerStyle"
+            data-search="true"
             data-show-refresh="true"
-            data-show-columns="true"
             data-show-fullscreen="true"
             data-show-export="true"
             data-pagination="true"
@@ -46,6 +49,12 @@
             data-query-params="queryParams"
             data-url="/admin/pageTable">
         <thead>
+<!--        <tr>-->
+            <th data-field="registerId" data-footer-formatter="idFormatter">#</th>
+            <th data-field="memberName" data-footer-formatter="memberFormatter">姓名</th>
+            <th data-field="dinnerDate">就餐日期</th>
+            <th data-field="departmentName">部门名称</th>
+<!--        </tr>-->
         </thead>
     </table>
 </div>
@@ -70,7 +79,7 @@
                 autoclose: true,
                 startView: 0,
                 format: "yyyy-mm-dd",
-                todayBtn: true,
+                todayBtn: 'linked',
                 clearBtn: true,
                 endDate: new Date()
             }).on('changeDate', function(ev){
@@ -88,7 +97,7 @@
                 autoclose: true,
                 startView: 0,
                 format: "yyyy-mm-dd",
-                todayBtn: false,
+                todayBtn: 'linked',
                 clearBtn: true,
                 endDate: new Date()
             }).on('changeDate', function(ev){
@@ -109,27 +118,55 @@
         export: 'bi-cloud-download'
     };
 
+    // $("#registerTable").bootstrapTable({
+    //     columns: [{
+    //         field: "registerId",
+    //         title: "序号",
+    //         dataFooterFormatter:"idFormatter"
+    //     },{
+    //         field: "memberName",
+    //         title: "用户名",
+    //         dataFooterFormatter:"memberFormatter"
+    //     },{
+    //         field: "dinnerDate",
+    //         title: "就餐日期",
+    //         dataFooterFormatter: false
+    //     },{
+    //         field: "departmentName",
+    //         title: "部门名称",
+    //         dataFooterFormatter: false
+    //     }]
+    // });
+
+
+    function footerStyle(column) {
+        return {
+            registerId: {
+                css:{"font-weight":"bold"}
+            },
+            memberName: {
+                css: {'font-weight': 'normal'}
+            },
+            dinnerDate: {
+                css: {'display': 'hide'}
+            },
+            departmentName: {
+                css: {'display': 'hide'}
+            }
+        }[column.field]
+    }
+
+    function idFormatter() {
+        return '总计'
+    }
+    function  memberFormatter(data) {
+        return data.length
+    }
     function queryParams(params) {
         params.startDate = $("#startDate").val();
         params.endDate = $("#endDate").val();
         return params
     }
-
-    $("#registerTable").bootstrapTable({
-        columns: [{
-            field: "registerId",
-            title: "序号"
-        },{
-            field: "memberName",
-            title: "用户名"
-        },{
-            field: "dinnerDate",
-            title: "就餐日期"
-        },{
-            field: "departmentName",
-            title: "部门名称"
-        }]
-    });
 </script>
 </body>
 </html>

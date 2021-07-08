@@ -53,7 +53,9 @@ public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Reg
         }else if(null != endDate){
             queryWrapper.le("create_date",endDate);
         }
-
+        if (null!=registration){
+            queryWrapper.like("member_name",registration.getMemberName());
+        }
 
       baseMapper.selectPage(registrationPage,queryWrapper);
     }

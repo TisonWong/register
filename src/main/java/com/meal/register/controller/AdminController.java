@@ -44,18 +44,22 @@ public class AdminController {
 
         LocalDateTime startLocalDateTime = null;
         LocalDateTime endLocalDateTime = null;
+        Registration registration = null;
+
         if(!startDate.isEmpty()){
             startLocalDateTime = LocalDateTime.of(LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE), LocalTime.of(0,0));
         }if(!endDate.isEmpty()){
             endLocalDateTime = LocalDateTime.of(LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE),LocalTime.of(23,59));
+        }if(!searchText.isEmpty()){
+            registration = new Registration();
+            registration.setMemberName(searchText);
         }
 
         System.err.println("searchText:"+searchText+",start:"+startLocalDateTime+",end:"+endLocalDateTime);
 
-//        Map<String, LocalDateTime> queryDate = myTool.getQueryDate();
-//        IPage<Registration> registrationIPage = registrationService.selectPage(offset, limit, null, queryDate.get("startDate"), queryDate.get("endDate"));
         Page<Registration> registrationPage = new Page<>(pageNumber,pageSize);
-        registrationService.selectPage(registrationPage, null, startLocalDateTime, endLocalDateTime);
+
+        registrationService.selectPage(registrationPage, registration, startLocalDateTime, endLocalDateTime);
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("total",registrationPage.getTotal());
         resultMap.put("rows",registrationPage.getRecords());
