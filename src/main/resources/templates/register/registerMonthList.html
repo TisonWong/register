@@ -17,15 +17,15 @@
 
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
-        <h1 class="modal-title">已预约记录查询</h1>
-        <a class="btn btn-light" href="/admin/monthList">当月记录查询</a>
+        <h1 class="modal-title">汇总查询</h1>
+        <a class="btn btn-light" href="/admin/list">当天记录查询</a>
     </header>
 
     <div id="toolbar">
         <div class="input-group input-daterange" id="datepicker">
-            <input type="text" class="form-control" id="startDate" name="start" th:value="${toDay}" data-bs-toggle="tooltip" data-bs-placement="right" title="查询起始日期">
+            <input type="text" class="form-control" id="startDate" name="start" th:value="${firstDayOfMonth}" data-bs-toggle="tooltip" data-bs-placement="right" title="查询起始日期">
             <div class="input-group-addon"><i class="bi bi-dash"></i></div>
-            <input type="text" class="form-control" id="endDate" name="end" th:value="${toDay}" data-bs-toggle="tooltip" data-bs-placement="right" title="查询截止日期">
+            <input type="text" class="form-control" id="endDate" name="end" th:value="${lastDayOfMonth}" data-bs-toggle="tooltip" data-bs-placement="right" title="查询截至日期">
         </div>
     </div>
 <!--data-show-columns="true"-->
@@ -35,8 +35,6 @@
             data-height="560"
             data-toolbar="#toolbar"
             data-icons="icons"
-            data-show-footer="true"
-            data-footer-style="footerStyle"
             data-search="true"
             data-show-refresh="true"
             data-show-fullscreen="true"
@@ -48,14 +46,15 @@
             data-query-params-type=""
             data-side-pagination="server"
             data-query-params="queryParams"
-            data-url="/admin/pageTable">
+            data-url="/admin/monthPageTable">
         <thead>
-<!--        <tr>-->
-            <th data-field="registerId" data-footer-formatter="idFormatter" data-formatter="genIndex" data-align="center">序号</th>
-            <th data-field="memberName" data-footer-formatter="memberFormatter" data-align="center">姓名</th>
-            <th data-field="dinnerDate" data-align="center">就餐日期</th>
-            <th data-field="departmentName" data-align="center">部门名称</th>
-<!--        </tr>-->
+        <tr>
+<!--            <th data-field="registerId">#</th>-->
+<!--            <th data-field="dinnerMonth">月份</th>-->
+<!--            <th data-field="memberName">姓名</th>-->
+<!--            <th data-field="departmentName">部门名称</th>-->
+<!--            <th data-field="dinnerCount">就餐次数</th>-->
+        </tr>
         </thead>
     </table>
 </div>
@@ -110,6 +109,7 @@
                 $("#registerTable").bootstrapTable("refresh")
         });
     }
+
     DatePicker("#startDate","#endDate");
 
     window.icons = {
@@ -119,54 +119,36 @@
         export: 'bi-cloud-download'
     };
 
-    // $("#registerTable").bootstrapTable({
-    //     columns: [{
-    //         field: "registerId",
-    //         title: "序号",
-    //         dataFooterFormatter:"idFormatter"
-    //     },{
-    //         field: "memberName",
-    //         title: "用户名",
-    //         dataFooterFormatter:"memberFormatter"
-    //     },{
-    //         field: "dinnerDate",
-    //         title: "就餐日期",
-    //         dataFooterFormatter: false
-    //     },{
-    //         field: "departmentName",
-    //         title: "部门名称",
-    //         dataFooterFormatter: false
-    //     }]
-    // });
-
-    function genIndex(value,row,index){
-        return (index+1);
-    }
-
-
-    function footerStyle(column) {
-        return {
-            registerId: {
-                css:{"font-weight":"bold"}
-            },
-            memberName: {
-                css: {'font-weight': 'normal'}
-            },
-            dinnerDate: {
-                css: {'display': 'hide'}
-            },
-            departmentName: {
-                css: {'display': 'hide'}
+    $("#registerTable").bootstrapTable({
+        columns: [{
+            field: "registerId",
+            title: "序号",
+            align: "center",
+            formatter: function(value,row,index){
+                return (index+1);
             }
-        }[column.field]
-    }
+        },{
+            field: "dinnerMonth",
+            title: "月份",
+            align: "center",
+            formatter: function(value,row,index){
+                return value.substring(0,value.lastIndexOf("-"));
+            }
+        },{
+            field: "memberName",
+            title: "用户名",
+            align: "center",
+        },{
+            field: "departmentName",
+            title: "部门名称",
+            align: "center",
+        },{
+            field: "dinnerCount",
+            title: "就餐次数",
+            align: "center",
+        },]
+    });
 
-    function idFormatter() {
-        return '总计'
-    }
-    function  memberFormatter(data) {
-        return data.length
-    }
     function queryParams(params) {
         params.startDate = $("#startDate").val();
         params.endDate = $("#endDate").val();

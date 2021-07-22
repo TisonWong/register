@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.meal.register.entity.Registration;
 import com.meal.register.entity.dto.RegistrationDto;
-import com.meal.register.mapper.RegistrationMapper;
-import com.meal.register.service.IRegistrationService;
+import com.meal.register.mapper.RegistrationDtoMapper;
+import com.meal.register.service.IRegistrationDtoService;
 import com.meal.register.util.MyTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,44 +18,39 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * <p>
- * 登记记录表 服务实现类
+ * 月记录查询 服务实现类
  * </p>
  *
  * @author Tison
- * @since 2021-06-24
+ * @since 2021-07-22
  */
 @Service
-public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Registration> implements IRegistrationService {
+public class RegistrationDtoServiceImpl extends ServiceImpl<RegistrationDtoMapper, RegistrationDto> implements IRegistrationDtoService {
 
     @Autowired
     private MyTool myTool;
 
     @Override
-    public Integer addRegister(Registration registration) {
-        return baseMapper.insert(registration);
-    }
-
-    @Override
-    public Integer deleteRegister(Registration registration) {
-        return baseMapper.deleteById(registration.getRegisterId());
-    }
-
-    @Override
-    public void selectPage(Page<Registration> registrationPage, String searchText, String startDate, String endDate) {
+    public void selectMonthPage(Page<RegistrationDto> registrationPage, String searchText, String startDate, String endDate) {
         LocalDateTime startLocalDateTime = null;
         LocalDateTime endLocalDateTime = null;
-        Registration registration = null;
+        RegistrationDto registrationDto = null;
+
+        QueryWrapper<RegistrationDto> queryWrapper = new QueryWrapper<>();
+
 
         if(null != startDate && !startDate.isEmpty()){
             startLocalDateTime = LocalDateTime.of(LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE), LocalTime.of(0,0));
         }if(null != endDate && !endDate.isEmpty()){
             endLocalDateTime = LocalDateTime.of(LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE),LocalTime.of(23,59));
-        }if(null != searchText && !searchText.isEmpty()){
-            registration = new Registration();
-            registration.setMemberName(searchText);
         }
 
-        QueryWrapper<Registration> queryWrapper = new QueryWrapper<>();
+        if(null != searchText && !searchText.isEmpty()){
+            registrationDto = new RegistrationDto();
+            registrationDto.setMemberName(searchText);
+        }
+
+        queryWrapper.select("register_id","member_name","dinner_date as dinnerMonth","department_name","COUNT(member_name) as dinnerCount");
 
         if(null != startLocalDateTime && null != endLocalDateTime){
             queryWrapper.between("create_date",startLocalDateTime,endLocalDateTime);
@@ -64,21 +59,12 @@ public class RegistrationServiceImpl extends ServiceImpl<RegistrationMapper, Reg
         }else if(null != endLocalDateTime){
             queryWrapper.le("create_date",endLocalDateTime);
         }
-        if (null!=registration){
-            queryWrapper.like("member_name",registration.getMemberName());
+        if (null != registrationDto){
+            queryWrapper.like("member_name",registrationDto.getMemberName());
         }
 
-        baseMapper.selectPage(registrationPage, queryWrapper);
-    }
+        queryWrapper.groupBy("member_name");
 
-    @Override
-    public Registration getObj(Registration registration) {
-        LocalDate nextDay = myTool.getNextDay();
-
-        QueryWrapper<Registration> registrationQueryWrapper = new QueryWrapper<>();
-        registrationQueryWrapper.eq("dinner_date",nextDay);
-        registrationQueryWrapper.eq("member_name",registration.getMemberName());
-
-        return baseMapper.selectOne(registrationQueryWrapper);
+        baseMapper.selectPage(registrationPage,queryWrapper);
     }
 }

@@ -17,3 +17,4 @@ function  setHtmlFontSize() {
     deviceWidth = document.documentElement.clientWidth > 1920 ? 1920: document.documentElement.clientWidth;
     document.getElementsByTagName("html")[0].style.cssText = "font-size:"+deviceWidth / 80 +"px !important";
 }
+

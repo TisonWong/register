@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8888
 
 spring:
   thymeleaf:
@@ -30,3 +30,5 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
   mapper-locations: classpath:mapper/*.xml
+  configuration: #打印SQL语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

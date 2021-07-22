@@ -27,8 +27,7 @@ public interface IRegistrationService extends IService<Registration> {
 
     Integer deleteRegister(Registration registration);
 
-    void selectPage(Page<Registration> page, Registration registration, LocalDateTime startDate, LocalDateTime endDate);
+    void selectPage(Page<Registration> page, String searchText, String startDate, String endDate);
 
     Registration getObj(Registration registration);
-
 }
